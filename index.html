@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A demonstration of a real-world ticket booking queue using the FIFO data structure.">
+  <title>QueuePass | Ticket Booking Queue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="QueuePass home"><span class="brand-mark">Q</span><span>Queue<span class="brand-light">Pass</span></span></a>
+    <nav><a href="#how-it-works">How it works</a><a href="#queue-demo">Live demo</a><a href="#about-queues">About queues</a></nav>
+    <a class="nav-cta" href="#queue-demo">Join the queue <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> A REAL-WORLD DATA STRUCTURE PROJECT</div>
+        <h1>Your place in line.<br><span>Made simple.</span></h1>
+        <p class="hero-lede">Explore how the Queue data structure keeps ticket booking fair and organised — one person at a time.</p>
+        <div class="hero-actions"><a class="button primary" href="#queue-demo">Try the live demo <span>↓</span></a><a class="text-link" href="#about-queues">Understand FIFO <span>↗</span></a></div>
+        <div class="hero-proof"><div class="avatar-stack"><span>A</span><span>K</span><span>M</span><span>+</span></div><p><strong>First come, first served.</strong><br><small>Fair, orderly, predictable.</small></p></div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of ticket queue">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="ticket-illustration">
+          <div class="ticket-top"><span class="mini-brand">QP / LIVE</span><span class="ticket-dot">● ● ●</span></div>
+          <div class="ticket-label">YOUR QUEUE NUMBER</div>
+          <div class="ticket-number">Q<span>024</span></div>
+          <div class="ticket-divider"><span></span><span></span></div>
+          <div class="ticket-bottom"><div><small>POSITION</small><strong>04 of 24</strong></div><div class="qr-art"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="float-card float-top"><span class="float-icon">✓</span><div><strong>Fair access</strong><small>FIFO queue order</small></div></div>
+        <div class="float-card float-bottom"><span class="float-icon purple">↗</span><div><strong>You're in line</strong><small>Queue position updated</small></div></div>
+        <div class="hero-caption">A smarter way to manage high-demand events.</div>
+      </div>
+    </section>
+
+    <section class="stats-strip" aria-label="Project highlights">
+      <div><span class="stat-icon">01</span><p><strong>One queue</strong><small>Every request in order</small></p></div>
+      <div><span class="stat-icon">FIFO</span><p><strong>Fair processing</strong><small>First in, first out</small></p></div>
+      <div><span class="stat-icon">↗</span><p><strong>Live simulation</strong><small>Join and serve tickets</small></p></div>
+    </section>
+
+    <section class="section demo-section" id="queue-demo">
+      <div class="section-heading">
+        <div><div class="eyebrow">INTERACTIVE EXPERIENCE</div><h2>Ticket booking <span>queue.</span></h2><p>Join the line as a customer, then process the next ticket to see FIFO in action.</p></div>
+        <div class="demo-badge"><span class="pulse"></span> DEMO MODE</div>
+      </div>
+      <div class="demo-grid">
+        <div class="panel booking-panel">
+          <div class="panel-heading"><div class="panel-icon">＋</div><div><h3>Join the queue</h3><p>Get your place in line</p></div></div>
+          <form id="booking-form">
+            <label for="customer-name">Your full name</label>
+            <input id="customer-name" name="name" type="text" placeholder="e.g. Ama Mensah" maxlength="60" required>
+            <label for="event-choice">Choose an event</label>
+            <select id="event-choice" name="event" required>
+              <option value="Accra Music Night">Accra Music Night — GHS 120</option>
+              <option value="Black Stars Match">Black Stars Match — GHS 80</option>
+              <option value="Campus Comedy Show">Campus Comedy Show — GHS 50</option>
+            </select>
+            <label for="ticket-count">Number of tickets</label>
+            <div class="stepper"><button type="button" id="minus-tickets" aria-label="Decrease tickets">−</button><output id="ticket-count">1</output><button type="button" id="plus-tickets" aria-label="Increase tickets">＋</button><span>ticket(s) per booking</span></div>
+            <button class="button primary full-width" type="submit">Join booking queue <span>→</span></button>
+            <p class="form-note"><span>🔒</span> Demo only — no payment or real ticket is issued.</p>
+          </form>
+          <div class="ticket-result" id="ticket-result" hidden aria-live="polite">
+            <div class="result-check">✓</div><div><small>YOUR QUEUE TICKET</small><h3 id="result-number">Q001</h3><p id="result-message">You have joined the queue.</p></div>
+          </div>
+        </div>
+        <div class="panel queue-panel">
+          <div class="queue-panel-top"><div class="panel-heading"><div class="panel-icon purple-icon">≋</div><div><h3>Live waiting line</h3><p>Customers are served in arrival order</p></div></div><button class="small-button" id="add-sample">+ Add sample</button></div>
+          <div class="queue-metrics">
+            <div><small>WAITING</small><strong id="waiting-count">0</strong></div>
+            <div><small>SERVED</small><strong id="served-count">0</strong></div>
+            <div><small>NEXT TICKET</small><strong id="next-ticket">Q001</strong></div>
+          </div>
+          <div class="queue-list-heading"><span>QUEUE ORDER</span><span id="queue-label">0 people</span></div>
+          <ol class="queue-list" id="queue-list"><li class="empty-state"><span class="empty-symbol">↳</span><strong>Your queue starts here</strong><small>Register yourself or add a sample customer.</small></li></ol>
+          <div class="queue-actions"><button class="button dark" id="serve-next" type="button">Call next customer <span>→</span></button><button class="button outline" id="reset-demo" type="button">Reset demo</button></div>
+          <p class="queue-feedback" id="queue-feedback" role="status">Waiting for the first customer to join.</p>
+        </div>
+      </div>
+      <div class="now-serving" id="now-serving"><div class="serving-symbol">◉</div><div><small>CURRENTLY BEING SERVED</small><strong id="current-customer">No customer called yet</strong></div><span class="serving-status">Ready</span></div>
+    </section>
+
+    <section class="section how-section" id="how-it-works">
+      <div class="section-heading centered"><div class="eyebrow">THE PROCESS</div><h2>From joining to <span>booking.</span></h2><p>Four simple steps demonstrate how a queue controls access to a busy ticket counter.</p></div>
+      <div class="steps-grid">
+        <article class="step-card"><span class="step-number">01</span><div class="step-icon">＋</div><h3>Join the line</h3><p>A customer submits their name and event choice to enter the queue.</p><span class="code-chip">enqueue(customer)</span></article>
+        <article class="step-card"><span class="step-number">02</span><div class="step-icon">№</div><h3>Get a number</h3><p>The system assigns a unique ticket number and shows the customer's position.</p><span class="code-chip">ticket = nextId</span></article>
+        <article class="step-card"><span class="step-number">03</span><div class="step-icon">→</div><h3>Call next</h3><p>The ticket counter removes the customer at the front of the queue.</p><span class="code-chip">dequeue()</span></article>
+        <article class="step-card"><span class="step-number">04</span><div class="step-icon">✓</div><h3>Complete booking</h3><p>The customer is marked as served and the next person moves forward.</p><span class="code-chip">FIFO maintained</span></article>
+      </div>
+    </section>
+
+    <section class="fifo-section" id="about-queues">
+      <div class="fifo-copy"><div class="eyebrow light-eyebrow">THE DATA STRUCTURE</div><h2>First in.<br><span>First out.</span></h2><p>A queue is a linear data structure where the first item added is the first item removed. It works just like a line of people waiting at a ticket counter.</p><div class="fifo-pills"><span>FIFO</span><span>Enqueue</span><span>Dequeue</span><span>Front / Peek</span></div></div>
+      <div class="fifo-visual"><div class="fifo-labels"><span>FRONT — SERVED FIRST</span><span>REAR — NEW ARRIVALS</span></div><div class="fifo-track"><div class="fifo-person front-person"><b>01</b><span>Kojo</span></div><div class="fifo-person"><b>02</b><span>Ama</span></div><div class="fifo-person"><b>03</b><span>Yaw</span></div><div class="fifo-person"><b>04</b><span>Abena</span></div><div class="fifo-person new-person"><b>05</b><span>You</span></div></div><div class="fifo-arrows"><span>← Served in this direction</span><span>New customers join →</span></div><div class="fifo-equation"><span>ENQUEUE</span><strong>+</strong><span>QUEUE</span><strong>→</strong><span>DEQUEUE</span></div></div>
+    </section>
+
+    <section class="section realworld-section">
+      <div class="section-heading"><div><div class="eyebrow">BEYOND THIS WEBSITE</div><h2>Queues are <span>everywhere.</span></h2><p>The same concept helps organise many real-world services.</p></div></div>
+      <div class="applications-grid">
+        <article><span class="app-icon">♫</span><div><h3>Concerts & events</h3><p>Manage high-demand ticket releases and virtual waiting rooms.</p></div></article>
+        <article><span class="app-icon">⚽</span><div><h3>Sports matches</h3><p>Organise fans waiting to purchase match tickets.</p></div></article>
+        <article><span class="app-icon">▣</span><div><h3>Cinema counters</h3><p>Serve customers in the order they arrive at the box office.</p></div></article>
+        <article><span class="app-icon">▤</span><div><h3>Transport tickets</h3><p>Handle customers buying bus or travel tickets at a counter.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section takeaway">
+      <div class="takeaway-icon">✓</div><div><div class="eyebrow">PROJECT TAKEAWAY</div><h2>A simple structure. A fairer process.</h2><p>This simulation shows how queue operations can reduce confusion, preserve arrival order, and make service easier to manage.</p></div><a class="button primary" href="#queue-demo">Try it yourself ↑</a>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">Q</span><span>Queue<span class="brand-light">Pass</span></span></a><p>Educational project · Queue data structure · FIFO</p><p class="footer-note">Prototype only. This demo does not sell tickets, process payments, or store customer data on a server.</p></footer>
+  <script src="script.js"></script>
+</body>
+</html>
